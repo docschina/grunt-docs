@@ -1,8 +1,10 @@
-The Grunt option API is for sharing parameters across multiple tasks and accessing parameters set on the command line.
+#grunt.option
 
-An example would be a flag to target whether your build is for development or staging. On the command line: `grunt deploy --target=staging` would cause `grunt.option('target')` to return `"staging"`.
+Grunt的option API被用来在多个任务之间共享参数、访问命令行中设置的参数。
 
-An example `Gruntfile` to utilize the `target` option could be:
+一个简单的案例就是为一个目标（target）指定一个用于区别开发期还是过渡期的标志。在命令行中：`grunt deploy --target=staging` 会让`grunt.option('target')`返回`"staging"`。
+
+下面这个 `Gruntfile` 案例展示了如何使用 `target` 选项：
 
 ```js
 grunt.initConfig({
@@ -25,9 +27,9 @@ var target = grunt.option('target') || 'dev';
 grunt.registerTask('deploy', ['compass:' + target]);
 ```
 
-As you run `grunt deploy` your stylesheets would default to the `dev` target and output the CSS in the expanded format. If you ran `grunt deploy --target=staging` the `staging` target would instead be ran and your CSS would be in the compressed format.
+当你执行 `grunt deploy` 时，你的样式表将默认为`dev`目标并且输出易于阅读的CSS格式代码。如果你运行 `grunt deploy --target=staging` ，`staging`目标会被执行，输出压缩之后的CSS。
 
-`grunt.option` can be used within tasks as well, for example:
+`grunt.option` 还可以在task中使用，如下：
 
 ```js
 grunt.registerTask('upload', 'Upload code to specified target.', function(n) {
@@ -37,17 +39,17 @@ grunt.registerTask('upload', 'Upload code to specified target.', function(n) {
 grunt.registerTask('deploy', ['validate', 'upload']);
 ```
 
-_Note that boolean options can be specified using just a key without a value. For example, running `grunt deploy --staging` on the command line would cause `grunt.option('staging')` to return `true`._
+_注意，boolean参数可以仅指定key，而省略value。例如，在命令行执行 `grunt deploy --staging` 将会使 `grunt.option('staging')` 返回 `true`。_
 
 
 ### grunt.option ☃
-Gets or sets an option.
+获取或设置一个选项。
 
 ```js
 grunt.option(key[, val])
 ```
 
-Boolean options can be negated by prepending `no-` onto the `key`. For example:
+boolean类型的选项可以通过在 `key` 前添加 `no-` 来取消。案例如下：
 
 ```js
 grunt.option('staging', false);
@@ -56,14 +58,14 @@ var isDev = grunt.option('no-staging');
 ```
 
 ### grunt.option.init
-Initialize `grunt.option`. If `initObject` is omitted option will be initialized to an empty object otherwise will be set to `initObject`.
+初始化 `grunt.option`。如果省略 `initObject` ，option将被初始化为一个空对象，否则将被设置为 `initObject`。
 
 ```js
 grunt.option.init([initObject])
 ```
 
 ### grunt.option.flags
-Returns the options as an array of command line parameters.
+将所有参数作为命令行参数数组返回。
 
 ```js
 grunt.option.flags()

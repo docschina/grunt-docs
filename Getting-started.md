@@ -1,56 +1,61 @@
-Grunt and Grunt plugins are installed and managed via [npm](https://www.npmjs.org/), the [Node.js](https://nodejs.org/) package manager.
-Grunt 0.4.x requires stable Node.js versions `>= 0.8.0`.
+# 快速入门
 
-Before setting up Grunt ensure that your [npm](https://www.npmjs.org/) is up-to-date by running `npm update -g npm` (this might require `sudo` on certain systems).
+Grunt和 Grunt 插件是通过 [npm](https://www.npmjs.org/) 安装并管理的，npm是 [Node.js](https://nodejs.org/) 的包管理器。
 
-If you already have installed Grunt and are now searching for some quick reference, please checkout our [`Gruntfile` example](https://gruntjs.com/sample-gruntfile) and how to [configure a task](https://gruntjs.com/configuring-tasks).
+Grunt 0.4.x 必须配合 Node.js `>= 0.8.0` 版本使用。
 
-## Installing the CLI
-**Using Grunt 0.3? Please see [Grunt 0.3 Notes](upgrading-from-0.3-to-0.4#grunt-0.3-notes)**
+在安装 Grunt 前，请确保当前环境中所安装的 [npm](https://www.npmjs.org/) 已经是最新版本，执行 `npm update -g npm` 指令进行升级（在某些系统中可能需要 `sudo` 指令）。
 
-In order to get started, you'll want to install Grunt's command line interface (CLI) globally. You may need to use sudo (for OSX, *nix, BSD etc) or run your command shell as Administrator (for Windows) to do this.
+如果你已经安装了 Grunt，现在需要参考一些文档手册，那就请看一看 [`Gruntfile` 实例](https://gruntjs.com/sample-gruntfile) 和如何 [配置任务](https://gruntjs.com/configuring-tasks)吧。
+
+
+## 安装 CLI
+** 还在使用 Grunt 0.3 版本吗？请查看 [Grunt 0.3 注意事项](upgrading-from-0.3-to-0.4#grunt-0.3-notes) **
+
+在继续学习前，你需要先将Grunt命令行（CLI）安装到全局环境中。安装时可能需要使用sudo（针对OSX、*nix、BSD等系统中）权限或者作为管理员（对于Windows环境）来执行以下命令。
 
 ```shell
 npm install -g grunt-cli
 ```
 
-This will put the `grunt` command in your system path, allowing it to be run from any directory.
+上述命令执行完后，`grunt` 命令就被加入到你的系统路径中了，以后就可以在任何目录下执行此命令了。
 
-Note that installing `grunt-cli` does not install the Grunt task runner!  The job of the Grunt CLI is simple: run the version of Grunt which has been installed next to a `Gruntfile`.
-This allows multiple versions of Grunt to be installed on the same machine simultaneously.
+注意，安装`grunt-cli`并不等于安装了 Grunt！Grunt CLI的任务很简单：调用与`Gruntfile`在同一目录中 Grunt。这样带来的好处是，允许你在同一个系统上同时安装多个版本的 Grunt。
 
-## How the CLI works
+这样就能让多个版本的 Grunt 同时安装在同一台机器上。
 
-Each time `grunt` is run, it looks for a locally installed Grunt using node's `require()` system. Because of this, you can run `grunt` from any subfolder in your project.
+## CLI 是如何工作的
 
-If a locally installed Grunt is found, the CLI loads the local installation of the Grunt library, applies the configuration from your `Gruntfile`, and executes any tasks you've requested for it to run. To really understand what is happening, [read the code](https://github.com/gruntjs/grunt-cli/blob/master/bin/grunt).
+每次运行`grunt` 时，他就利用node提供的`require()`系统查找本地安装的 Grunt。正是由于这一机制，你可以在项目的任意子目录中运行`grunt` 。
 
-## Working with an existing Grunt project
-Assuming that the Grunt CLI has been installed and that the project has already been configured with a `package.json` and a `Gruntfile`, it's very easy to start working with Grunt:
+如果找到一份本地安装的 Grunt，CLI就将其加载，并传递`Gruntfile`中的配置信息，然后执行你所指定的任务。为了更好的理解 Grunt CLI的执行原理，请[阅读源码](https://github.com/gruntjs/grunt-cli/blob/master/bin/grunt)。
 
-1. Change to the project's root directory.
-2. Install project dependencies with `npm install`.
-3. Run Grunt with `grunt`.
+## 拿一份现有的 Grunt 项目练手
+假定Grunt CLI已经正确安装，并且已经有一份配置好`package.json` 和 `Gruntfile` 文件的项目了，接下来就很容易拿Grunt练手了：
 
-That's really all there is to it. Installed Grunt tasks can be listed by running `grunt --help` but it's usually a good idea to start with the project's documentation.
+1. 将命令行的当前目录转到项目的根目录下。
+2. 执行`npm install`命令安装项目依赖的库。
+3. 执行 `grunt` 命令。
 
-## Preparing a new Grunt project
-A typical setup will involve adding two files to your project: `package.json` and the `Gruntfile`.
+OK，就是这么简单。还可以通过`grunt --help` 命令列出所有已安装的Grunt任务（task），但是一般更建议去查看项目的文档以获取帮助信息。
 
-**package.json**: This file is used by [npm] to store metadata for projects published as npm modules. You will list grunt and the Grunt plugins your project needs as [devDependencies] in this file.
+## 准备一份新的 Grunt 项目
+一般需要在你的项目中添加两份文件：`package.json` 和 `Gruntfile`。
 
-**Gruntfile**: This file is named `Gruntfile.js` or `Gruntfile.coffee` and is used to configure or define tasks and load Grunt plugins.
-**When this documentation mentions a `Gruntfile` it is talking about a file, which is either a `Gruntfile.js` or a `Gruntfile.coffee`**.
+**package.json**: 此文件被[npm]用于存储项目的元数据，以便将此项目发布为npm模块。你可以在此文件中列出项目依赖的grunt和Grunt插件，放置于[devDependencies]配置段内。
+
+**Gruntfile**: 此文件被命名为 `Gruntfile.js` 或 `Gruntfile.coffee`，用来配置或定义任务（task）并加载Grunt插件的。
+**此文档中提到的 `Gruntfile` 其实说的是一个文件，文件名是 `Gruntfile.js` 或 `Gruntfile.coffee`**。
 
 ## package.json
 
-The `package.json` file belongs in the root directory of your project, next to the `Gruntfile`, and should be committed with your project source. Running `npm install` in the same folder as a `package.json` file will install the correct version of each dependency listed therein.
+`package.json`应当放置于项目的根目录中，与`Gruntfile`在同一目录中，并且应该与项目的源代码一起被提交。在上述目录(`package.json`所在目录)中运行`npm install`将依据`package.json`文件中所列出的每个依赖来自动安装适当版本的依赖。
 
-There are a few ways to create a `package.json` file for your project:
+下面列出了几种为你的项目创建`package.json`文件的方式：
 
-* Most [grunt-init] templates will automatically create a project-specific `package.json` file.
-* The [npm init] command will create a basic `package.json` file.
-* Start with the example below, and expand as needed, following this [specification][json].
+* 大部分 [grunt-init] 模版都会自动创建特定于项目的`package.json`文件。
+* [npm init]命令会创建一个基本的`package.json`文件。
+* 复制下面的案例，并根据需要做扩充，参考此[说明][json].
 
 ```js
 {
@@ -65,37 +70,37 @@ There are a few ways to create a `package.json` file for your project:
 }
 ```
 
-### Installing Grunt and gruntplugins
-The easiest way to add Grunt and gruntplugins to an existing `package.json` is with the command `npm install <module> --save-dev`. Not only will this install `<module>` locally, but it will automatically be added to the [devDependencies] section, using a [tilde version range].
+### 安装Grunt 和 grunt插件
+向已经存在的`package.json` 文件中添加Grunt和grunt插件的最简单方式是通过`npm install <module> --save-dev`命令。此命令不光安装了`<module>`，还会自动将其添加到[devDependencies] 配置段中，遵循[tilde version range]格式。
 
-For example, this will install the latest version of Grunt in your project folder, adding it to your devDependencies:
+例如，下面这条命令将安装Grunt最新版本到项目目录中，并将其添加到devDependencies内：
 
 ```shell
 npm install grunt --save-dev
 ```
 
-The same can be done for gruntplugins and other node modules. As seen in the following example installing the JSHint task module:
+同样，grunt插件和其它node模块都可以按相同的方式安装。下面展示的实例就是安装 JSHint 任务模块：
 
 ```shell
 npm install grunt-contrib-jshint --save-dev
 ```
 
-Checkout the current available gruntplugins to be installed and used on your project at the [plugins](https://gruntjs.com/plugins) page.
+在 [Grunt 插件](https://gruntjs.com/plugins) 页面可以看到当前可用的 Grunt 插件，他们可以直接在项目中安装并使用。
 
-Be sure to commit the updated `package.json` file with your project when you're done!
+安装插件之后，请务必确保将更新之后的 `package.json` 文件提交到项目仓库中。
 
-## The Gruntfile
-The `Gruntfile.js` or `Gruntfile.coffee` file is a valid JavaScript or CoffeeScript file that belongs in the root directory of your project, next to the `package.json` file, and should be committed with your project source.
+## Gruntfile
+`Gruntfile.js` 或 `Gruntfile.coffee` 文件是有效的 JavaScript 或 CoffeeScript 文件，应当放在你的项目根目录中，和`package.json`文件在同一目录层级，并和项目源码一起加入源码管理器。
 
-A `Gruntfile` is comprised of the following parts:
+Gruntfile由以下几部分构成：
 
-* The "wrapper" function
-* Project and task configuration
-* Loading Grunt plugins and tasks
-* Custom tasks
+* "wrapper" 函数
+* 项目与任务配置
+* 加载grunt插件和任务
+* 自定义任务
 
-### An example Gruntfile
-In the following `Gruntfile`, project metadata is imported into the Grunt config from the project's `package.json` file and the [grunt-contrib-uglify] plugin's `uglify` task is configured to minify a source file and generate a banner comment dynamically using that metadata. When `grunt` is run on the command line, the `uglify` task will be run by default.
+### Gruntfile文件案例
+在下面列出的这个 `Gruntfile` 中，`package.json`文件中的项目元数据（metadata）被导入到 Grunt 配置中， [grunt-contrib-uglify] 插件中的`uglify` 任务（task）被配置为压缩（minify）源码文件并依据上述元数据动态生成一个文件头注释。当在命令行中执行 `grunt` 命令时，`uglify` 任务将被默认执行。
 
 ```js
 module.exports = function(grunt) {
@@ -114,19 +119,19 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
+  // 加载包含 "uglify" 任务的插件。
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  // Default task(s).
+  // 默认被执行的任务列表。
   grunt.registerTask('default', ['uglify']);
 
 };
 ```
 
-Now that you've seen the whole `Gruntfile`, let's look at its component parts.
+前面已经向你展示了整个 `Gruntfile`，接下来将详细解释其中的每一部分。
 
-### The "wrapper" function
-Every `Gruntfile` (and gruntplugin) uses this basic format, and all of your Grunt code must be specified inside this function:
+### "wrapper" 函数
+每一份 `Gruntfile` （和grunt插件）都遵循同样的格式，你所书写的Grunt代码必须放在此函数内：
 
 ```js
 module.exports = function(grunt) {
@@ -134,14 +139,15 @@ module.exports = function(grunt) {
 };
 ```
 
-### Project and task configuration
-Most Grunt tasks rely on configuration data defined in an object passed to the [[grunt.initConfig|grunt#grunt.initconfig]] method.
+### 项目和任务配置
+大部分的Grunt任务都依赖某些配置数据，这些数据被定义在一个object内，并传递给[grunt.initConfig](grunt#grunt.initconfig) 方法。
 
-In this example, `grunt.file.readJSON('package.json')` imports the JSON metadata stored in `package.json` into the grunt config. Because `<% %>` template strings may reference any config properties, configuration data like filepaths and file lists may be specified this way to reduce repetition.
+在下面的案例中，`grunt.file.readJSON('package.json')` 将存储在`package.json`文件中的JSON元数据引入到grunt config中。 由于`<% %>`模板字符串可以引用任意的配置属性，因此可以通过这种方式来指定诸如文件路径和文件列表类型的配置数据，从而减少一些重复的工作。
 
-You may store any arbitrary data inside of the configuration object, and as long as it doesn't conflict with properties your tasks require, it will be otherwise ignored. Also, because this is JavaScript, you're not limited to JSON; you may use any valid JS here. You can even programmatically generate the configuration if necessary.
+你可以在这个配置对象中(传递给initConfig()方法的对象)存储任意的数据，只要它不与你任务配置所需的属性冲突，否则会被忽略。此外，由于这本身就是JavaScript，你不仅限于使用JSON；你可以在这里使用任意的有效的JS代码。如果有必要，你甚至可以以编程的方式生成配置。
 
-Like most tasks, the [grunt-contrib-uglify] plugin's `uglify` task expects its configuration to be specified in a property of the same name. Here, the `banner` option is specified, along with a single uglify target named `build` that minifies a single source file to a single destination file.
+与大多数task一样，[grunt-contrib-uglify] 插件中的`uglify` 任务要求它的配置被指定在一个同名属性中。在这里有一个例子, 我们指定了一个`banner`选项(用于在文件顶部生成一个注释)，紧接着是一个单一的名为`build`的uglify目标，用于将一个js文件压缩为一个目标文件。
+
 
 ```js
 // Project configuration.
@@ -159,25 +165,25 @@ grunt.initConfig({
 });
 ```
 
-### Loading Grunt plugins and tasks
-Many commonly used tasks like [concatenation], [minification][grunt-contrib-uglify] and [linting] are available as [grunt plugins](https://github.com/gruntjs). As long as a plugin is specified in `package.json` as a dependency, and has been installed via `npm install`, it may be enabled inside your `Gruntfile` with a simple command:
+### 加载 Grunt 插件和任务
+像 [concatenation]、[minification]、[grunt-contrib-uglify] 和 [linting]这些常用的任务（task）都已经以[grunt插件](https://github.com/gruntjs)的形式被开发出来了。只要在 `package.json` 文件中被列为dependency（依赖）的包，并通过`npm install`安装之后，都可以在`Gruntfile`中以简单命令的形式使用：
 
 ```js
-// Load the plugin that provides the "uglify" task.
+// 加载能够提供"uglify"任务的插件。
 grunt.loadNpmTasks('grunt-contrib-uglify');
 ```
 
-**Note:** the `grunt --help` command will list all available tasks.
+**注意：** `grunt --help` 命令将列出所有可用的任务。
 
-### Custom tasks
-You can configure Grunt to run one or more tasks by default by defining a `default` task. In the following example, running `grunt` at the command line without specifying a task will run the `uglify` task. This is functionally the same as explicitly running `grunt uglify` or even `grunt default`. Any number of tasks (with or without arguments) may be specified in the array.
+### 自定义任务
+通过定义 `default` 任务，可以让Grunt默认执行一个或多个任务。在下面的这个案例中，执行 `grunt` 命令时如果不指定一个任务的话，将会执行`uglify`任务。这和执行`grunt uglify` 或者 `grunt default`的效果一样。`default`任务列表数组中可以指定任意数目的任务（可以带参数）。
 
 ```js
 // Default task(s).
 grunt.registerTask('default', ['uglify']);
 ```
 
-If your project requires tasks not provided by a Grunt plugin, you may define custom tasks right inside the `Gruntfile`. For example, this `Gruntfile` defines a completely custom `default` task that doesn't even utilize task configuration:
+如果Grunt插件中的任务（task）不能满足你的项目需求，你还可以在`Gruntfile`中自定义任务（task）。例如，在下面的 `Gruntfile` 中自定义了一个`default` 任务，并且他甚至不依赖任务配置：
 
 ```js
 module.exports = function(grunt) {
@@ -190,9 +196,9 @@ module.exports = function(grunt) {
 };
 ```
 
-Custom project-specific tasks don't need to be defined in the `Gruntfile`; they may be defined in external `.js` files and loaded via the [[grunt.loadTasks|grunt#grunt.loadtasks]] method.
+特定于项目的任务不必在 `Gruntfile` 中定义。他们可以定义在外部`.js` 文件中，并通过[grunt.loadTasks](grunt/#grunt.loadtasks) 方法加载。
 
-## Further Reading
+## 扩展阅读
 
 * The [[Installing grunt]] guide has detailed information about installing specific, production or in-development, versions of Grunt and grunt-cli.
 * The [[Configuring Tasks]] guide has an in-depth explanation on how to configure tasks, targets, options and files inside the `Gruntfile`, along with an explanation of templates, globbing patterns and importing external data.

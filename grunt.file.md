@@ -1,36 +1,37 @@
-There are many provided methods for reading and writing files, traversing the filesystem and finding files by matching globbing patterns. Many of these methods are wrappers around built-in Node.js file functionality, but with additional error handling, logging and character encoding normalization.
+# grunt.file
 
-_Note: all file paths are relative to the `Gruntfile` unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
+这里提供了很多用于读写文件、遍历文件系统和通过模式匹配查找文件的方法。其中很多方法都是Node.js中的文件操作函数的封装，但是提供了额外的错误处理、日志记录和字符编码转换。 
 
-## Character encoding
+_注意：所有的文件路径都是参照 `Gruntfile` 文件的相对路径，除非通过 `grunt.file.setBase` 函数或在命令行中指定 `--base` 参数改变当前工作目录。_
+
+## 字符编码
 
 ### grunt.file.defaultEncoding
-Set this property to change the default encoding used by all `grunt.file` methods. Defaults to `'utf8'`. If you do have to change this value, it's recommended that you change it as early as possible inside your Gruntfile.
+设置此属性可以改变所有 `grunt.file` 方法的默认编码。默认是 `'utf8'`。如果必须改变这个值，建议你在Gruntfile文件中尽可能早改变。
 
 ```js
 grunt.file.defaultEncoding = 'utf8';
 ```
 
-
 ### grunt.file.preserveBOM
-*Added in 0.4.2*
+*添加于 0.4.2 版本*
 
-Whether to preserve the Byte Order Mark (BOM) on `file.read` rather than strip it.
+是否在 `file.read` 时保留字节顺序标记（BOM）。
 
 ```js
 grunt.file.preserveBOM = false;
 ```
 
-## Reading and writing
+## 读写文件
 
 ### grunt.file.read
-Read and return a file's contents. Returns a string, unless `options.encoding` is `null` in which case it returns a [Buffer](https://nodejs.org/docs/latest/api/buffer.html).
+读取并返回文件的内容。返回值为一个字符串，如果 `options.encoding` 为 `null` ，则返回一个 [Buffer](https://nodejs.org/docs/latest/api/buffer.html)。
 
 ```js
 grunt.file.read(filepath [, options])
 ```
 
-The `options` object has these possible properties:
+`options` 对象可以设置以下属性： 
 
 ```js
 var options = {
@@ -41,29 +42,29 @@ var options = {
 ```
 
 ### grunt.file.readJSON
-Read a file's contents, parsing the data as JSON and returning the result. See `grunt.file.read` for a list of supported options.
+读取一个文件的内容，将其按照JSON格式解析，返回结果。参见 `grunt.file.read` 获取其所支持的参数列表。
 
 ```js
 grunt.file.readJSON(filepath [, options])
 ```
 
 ### grunt.file.readYAML
-Read a file's contents, parsing the data as YAML and returning the result. See `grunt.file.read` for a list of supported options.
+读取一个文件的内容，将其按照YAML格式解析，返回结果。参见 `grunt.file.read` 获取其所支持的参数列表。
 
 ```js
 grunt.file.readYAML(filepath [, options])
 ```
 
 ### grunt.file.write
-Write the specified contents to a file, creating intermediate directories if necessary. Strings will be encoded using the specified character encoding, [Buffers](https://nodejs.org/docs/latest/api/buffer.html) will be written to disk as-specified.
+将指定的内容写入文件中，如果需要，将创建文件路径中所有不存在的目录。字符串将按照指定的字符编码进行编码，[Buffers](https://nodejs.org/docs/latest/api/buffer.html) 将会按照指定的方式写入磁盘。
 
-_If the `--no-write` command-line option is specified, the file won't actually be written._
+_如果指定了 `--no-write` 命令行参数，将不会真正写入文件。_
 
 ```js
 grunt.file.write(filepath, contents [, options])
 ```
 
-The `options` object has these possible properties:
+`options` 对象可设置以下属性：
 
 ```js
 var options = {
@@ -74,15 +75,15 @@ var options = {
 ```
 
 ### grunt.file.copy
-Copy a source file to a destination path, creating intermediate directories if necessary.
+将原文件拷贝到指定路径，如果需要，将创建文件路径中所有不存在的目录
 
-_If the `--no-write` command-line option is specified, the file won't actually be written._
+_如果指定了 `--no-write` 命令行参数，将不会真正写入文件。_
 
 ```js
 grunt.file.copy(srcpath, destpath [, options])
 ```
 
-The `options` object has these possible properties:
+`options` 对象可设置以下属性：
 
 ```js
 var options = {
@@ -103,17 +104,17 @@ var options = {
 ```
 
 ### grunt.file.delete
-Delete the specified filepath. Will delete files and folders recursively.
+删除指定的文件。文件和目录会被依次递归删除。
 
 _Will not delete the current working directory or files outside the current working directory unless the `--force` command-line option is specified._
 
-_If the `--no-write` command-line option is specified, the filepath won't actually be deleted._
+_如果指定了 `--no-write` 命令行参数，那么，文件路径将不会真的被删除。_
 
 ```js
 grunt.file.delete(filepath [, options])
 ```
 
-The `options` object has one possible property:
+`options` 对象只可以设置以下属性：
 
 ```js
 var options = {
@@ -123,26 +124,25 @@ var options = {
 };
 ```
 
-## Directories
+## 目录操作
 
 ### grunt.file.mkdir
-Works like `mkdir -p`. Create a directory along with any intermediate directories. If `mode` isn't specified, it defaults to `0777 & (~process.umask())`.
+工作方式类似 `mkdir -p`。创建一个目录和所有的中间目录。如果没有指定 `mode` ，默认是 `0777 & (~process.umask())`.
 
-_If the `--no-write` command-line option is specified, directories won't actually be created._
+_如果没有 `--no-write` 命令行参数，目录不会被真正创建。_
 
 ```js
 grunt.file.mkdir(dirpath [, mode])
 ```
 
 ### grunt.file.recurse
-Recurse into a directory, executing `callback` for each file.
+递归遍历整个目录，对每个文件都执行 `callback` 函数。
 
 ```js
 grunt.file.recurse(rootdir, callback)
 ```
 
-The callback function receives the following arguments:
-
+callback 函数接收以下参数：
 ```js
 function callback(abspath, rootdir, subdir, filename) {
   // The full path to the current file, which is nothing more than
@@ -157,38 +157,38 @@ function callback(abspath, rootdir, subdir, filename) {
 }
 ```
 
-## Globbing patterns
-It is often impractical to specify all source filepaths individually, so Grunt supports filename expansion (also know as globbing) via the built-in [node-glob](https://github.com/isaacs/node-glob) library.
+## 模式匹配
+有时单独指定所有原始文件路径是不现实的，因此，Grunt通过内置的[node-glob](https://github.com/isaacs/node-glob) 库支持文件名 expansion (或者叫做 globbing)  。
 
-See the "Globbing patterns" section of the [[Configuring tasks]] guide for globbing pattern examples.
+参见 [配置任务](configuring-tasks) 指南中的 "Globbing patterns" 章节以获取 globbing pattern 实例。
 
 
 ### grunt.file.expand
-Return a unique array of all file or directory paths that match the given globbing pattern(s). This method accepts either comma separated globbing patterns or an array of globbing patterns. Paths matching patterns that begin with `!` will be excluded from the returned array. Patterns are processed in order, so inclusion and exclusion order is significant.
+返回包含匹配给定通配符模式的文件或者目录路径的特殊数组。这个方法接收一个逗号分割的匹配模式或者一个匹配模式数组。如果路径匹配模式以`!`开头，它会从返回的数组排除所匹配的项。模式是按指定的顺序进行处理的， 因此包含和排除文件的顺序是很重要的。
 
 ```js
 grunt.file.expand([options, ] patterns)
 ```
 
-File paths are relative to the `Gruntfile` unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
+文件路径都是参照 `Gruntfile` 文件的相对路径，除非通过 `grunt.file.setBase` 或 `--base` 命令行参数修改了当前工作目录。
 
-The `options` object supports all [minimatch library](https://github.com/isaacs/minimatch) options, and a few others. For example:
+`options` 对象支持所有 [minimatch library](https://github.com/isaacs/minimatch) 的参数，也支持额外的一些，如下：
 
-* `filter` Either a valid [fs.Stats method name](https://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats) or a function that is passed the matched `src` filepath and returns `true` or `false`.
-* `nonull` Retain `src` patterns even if they fail to match files. Combined with grunt's `--verbose` flag, this option can help debug file path issues.
-* `matchBase` Patterns without slashes will match just the basename part. Eg. this makes `*.js` work like `**/*.js`.
-* `cwd` Patterns will be matched relative to this path, and all returned filepaths will also be relative to this path.
+* `filter` E接受一个有效的 [fs.Stats 方法名](https://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats) 或者一个已经通过了`src`文件路径匹配的函数，这个函数会返回`true`或`false`。
+* `nonull` 会保留`src`匹配模式，即使文件匹配失败。结合Grunt的`-verbose`标志，这个选项有助于文件路径问题的调试。
+* `matchBase` 不带斜线的模式只会匹配基本的名称部分。例如，这会使`*.js`就像`**/*.js`一样。
+* `cwd` 会让模式相对于当前路径进行模式匹配，所有返回的文件路径也是相对于当前路径的。
 
 ### grunt.file.expandMapping
-Returns an array of src-dest file mapping objects. For each source file matched by a specified pattern, join that file path to the specified `dest`. This file path may be flattened or renamed, depending on the options specified. See the `grunt.file.expand` method documentation for an explanation of how the `patterns` and `options` arguments may be specified.
+返回一个`src-dest`文件映射对象的数组。通过所指定的模式来匹配每一个源文件，然后将匹配的文件路径加入指定的`dest`中(dest存放匹配的文件路径)。这个文件路径会按照指定的选项加工或者重命名过。 查看`grunt.file.expand`方法文档可以了解如何指定`patterns`和`options`
 
 ```js
 grunt.file.expandMapping(patterns, dest [, options])
 ```
 
-_Note that while this method may be used to programmatically generate a `files` array for a multi task, the declarative syntax for doing this described in the "Building the files object dynamically" section of the [[Configuring tasks]] guide is preferred._
+_注意：这个方法可以用于以编程的方式针对多任务的情况生成一个`files`数组，它会优先使用在[配置任务](/configuring-tasks)指南中"动态构建文件对象"一节所描述的语法。_
 
-In addition to those the `grunt.file.expand` method supports, the `options` object also supports these properties:
+除了支持那些`grunt.file.expand`方法之外，`options`对象还支持下面这些属性:
 
 ```js
 var options = {
@@ -216,136 +216,136 @@ var options = {
 ```
 
 ### grunt.file.match
-Match one or more globbing patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified globbing patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings. Paths matching patterns that begin with `!` will be excluded from the returned array. Patterns are processed in order, so inclusion and exclusion order is significant.
+针对一个或者多个文件路径来匹配一个或者多个匹配模式。返回一个特殊的数组，这个数组包含与指定的通配符模式任意匹配的所有文件路径。`patterns`和`filepaths`参数可以是一个单一的字符串或者也可以是一个字符串数组.如果匹配模式以`!`开头，就会从返回的数组从排除模式匹配的路径。模式会按指定的顺序进行处理，因此包含和排除文件的顺序是重要的。
 
 ```js
 grunt.file.match([options, ] patterns, filepaths)
 ```
 
-The `options` object supports all [minimatch library](https://github.com/isaacs/minimatch) options. For example, if `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
+`options`对象也支持[minimatch库](https://github.com/isaacs/minimatch)提供的所有选项。例如：如果`options.matchBase`为true，即使模式中不带斜线，这个模式也会匹配包含斜线的基本名称。例如：`*.js`模式将匹配`path/to/file.js`文件路径。
 
 ### grunt.file.isMatch
-This method contains the same signature and logic as the `grunt.file.match` method, but simply returns `true` if any files were matched, otherwise `false`.
+这个方法与`grunt.file.match`方法包含同样的签名和逻辑，但是如果它匹配任意文件，就会简单的返回`ture`，否则返回`false`。
 
-## File types
+## 判断文件类型
 
 ### grunt.file.exists
-Does the given path exist? Returns a boolean.
+检测给定的路径是否存在，返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.exists(path1 [, path2 [, ...]])
 ```
 
 ### grunt.file.isLink
-Is the given path a symbolic link? Returns a boolean.
+给定的路径是否是符号链接，返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isLink(path1 [, path2 [, ...]])
 ```
 
-Returns false if the path doesn't exist.
+如果路径不存在则返回false。
 
 ### grunt.file.isDir
-Is the given path a directory? Returns a boolean.
+指定的路径是否是一个目录？返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isDir(path1 [, path2 [, ...]])
 ```
 
-Returns false if the path doesn't exist.
+如果路径不存在它也会返回false。
 
 ### grunt.file.isFile
-Is the given path a file? Returns a boolean.
+指定的路径是否是一个文件？ 返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isFile(path1 [, path2 [, ...]])
 ```
 
-Returns false if the path doesn't exist.
+如果路径不存在将返回false。
 
-## Paths
+## 路径
 
 ### grunt.file.isPathAbsolute
-Is a given file path absolute? Returns a boolean.
+指定的文件路径是否是绝对路径？ 返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
 ```
 
 ### grunt.file.arePathsEquivalent
-Do all the specified paths refer to the same path? Returns a boolean.
+所有给出的路径是否都是同一个路径？返回boolean类型的值。
 
 ```js
 grunt.file.arePathsEquivalent(path1 [, path2 [, ...]])
 ```
 
 ### grunt.file.doesPathContain
-Are all descendant path(s) contained within the specified ancestor path? Returns a boolean.
+所有descendant路径是否全部包含在指定的ancestor路径中？返回boolean类型的值。
 
-_Note: does not check to see if paths actually exist._
+_注意：不需要检查路径是否真的存在。_
 
 ```js
 grunt.file.doesPathContain(ancestorPath, descendantPath1 [, descendantPath2 [, ...]])
 ```
 
 ### grunt.file.isPathCwd
-Is a given file path the CWD? Returns a boolean.
+指定的文件路径是否是CWD？返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isPathCwd(path1 [, path2 [, ...]])
 ```
 
 ### grunt.file.isPathInCwd
-Is a given file path inside the CWD? Note: CWD is not _inside_ CWD. Returns a boolean.
+指定的文件路径是否在在CWD中？注意：CWD不在CWD_中_ 。返回boolean类型的值。
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
 ```js
 grunt.file.isPathInCwd(path1 [, path2 [, ...]])
 ```
 
 ### grunt.file.setBase
-Change grunt's current working directory (CWD). By default, all file paths are relative to the `Gruntfile`. This works just like the `--base` command-line option.
+改变Grunt的当前工作目录(CWD)。默认情况下，所有文件路径都是参照 `Gruntfile` 文件的相对路径。此函数和
+ `--base` 命令行参数的工作方式一致。
 
 ```js
 grunt.file.setBase(path1 [, path2 [, ...]])
 ```
 
-Like the Node.js [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+和 Node.js 中的 [path.join](https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。
 
-## External libraries
-*Deprecated*
+## 外部工具库
+*不建议使用*
 
-__All external libraries that are listed below are now deprecated.__
+__下面列出的所有外部工具库已经不再建议使用了。__
 
-Please use __npm__ to manage these external libraries in your project's dependencies.
+请使用 __npm__ 管理项目中对第三方工具库的依赖。
 
-For example if you want use [Lo-Dash](https://www.npmjs.org/package/lodash), install it first `npm install lodash`, then
-use it in your `Gruntfile`: `var _ = require('lodash');`
+例如，如果你需要使用 [Lo-Dash](https://www.npmjs.org/package/lodash)，首先通过 `npm install lodash` 安装，然后在 `Gruntfile` 文件中使用即可： `var _ = require('lodash');`
 
 ### grunt.file.glob
-*Deprecated*
+*不建议使用*
 
 [glob](https://github.com/isaacs/node-glob) - File globbing utility.
 
 ### grunt.file.minimatch
-*Deprecated*
+*不建议使用*
 
 [minimatch](https://github.com/isaacs/minimatch) - File pattern matching utility.
 
 ### grunt.file.findup
-*Deprecated*
+*不建议使用*
 
 [findup-sync](https://github.com/cowboy/node-findup-sync) - Search upwards for matching file patterns.

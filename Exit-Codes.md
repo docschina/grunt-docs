@@ -1,7 +1,9 @@
-* `0` - No errors!
-* `1` - Fatal error
-* `2` - Missing gruntfile error
-* `3` - Task error
-* `4` - Template processing error
-* `5` - Invalid shell auto-completion rules error
-* `6` - Warning
+# 退出码
+
+* `0` - 无错误！
+* `1` - 致命错误
+* `2` - 未找到gruntfile
+* `3` - Task 错误
+* `4` - 模版处理错误
+* `5` - 无效的shell自动完成规则
+* `6` - 警告

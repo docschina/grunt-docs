@@ -1,7 +1,9 @@
+#有用的资源
+
 ## IRC
 
-You can visit us in [#grunt on irc.freenode.net](http://webchat.freenode.net/?channels=grunt)
+你可以访问我们的 [#grunt on irc.freenode.net](http://webchat.freenode.net/?channels=grunt)。
 
-## Forums
+## 论坛
 
-You can post a question at [StackOverflow and tag it with "gruntjs"](http://stackoverflow.com/questions/tagged/gruntjs).
+你可以在 [StackOverflow 提出问题，并为问题贴一个 "gruntjs" 标签](http://stackoverflow.com/questions/tagged/gruntjs)。

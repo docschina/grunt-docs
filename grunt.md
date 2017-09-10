@@ -1,62 +1,64 @@
-Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [Gruntfile](Getting-started), Grunt plugin or in a [tasks file](Creating-tasks).
+#grunt
 
-Nearly all of the following methods are defined elsewhere, but are provided directly on the `grunt` object for convenience. See the individual api section docs for detailed explanations and examples.
+Grunt通过`grunt`对象暴露所有方法和属性，并将此对象赋予`module.exports`函数，这些方法和属性都将传递到你的[Gruntfile](getting-started)、Grunt插件或者[task文件](creating-tasks)中。
+
+以下所有的方法几乎都是在别处定义的，但是为了方便使用，也在`grunt`对象中做了定义。详细的解释和案例请参阅各个api单独的文档。
 
 ## Config
 
 ### grunt.initConfig
-_This method is an alias for the [grunt.config.init](grunt.config#grunt.config.init) method._
+_此方法是 [grunt.config.init](grunt.config#grunt.config.init) 方法的别名（alias）。_
 
 
-## Creating Tasks
+## 创建task
 
 ### grunt.registerTask
-_This method is an alias for the [grunt.task.registerTask](grunt.task#grunt.task.registerTask) method._
+_此方法是 [grunt.task.registerTask](grunt.task#grunt.task.registerTask) 方法的别名（alias）。_
 
 ### grunt.registerMultiTask
-_This method is an alias for the [grunt.task.registerMultiTask](grunt.task#grunt.task.registerMultiTask) method._
+_此方法是 [grunt.task.registerMultiTask](grunt.task#grunt.task.registerMultiTask) 方法的别名（alias）。_
 
 ### grunt.renameTask
-_This method is an alias for the [grunt.task.renameTask](grunt.task#grunt.task.renameTask) method._
+_此方法是 [grunt.task.renameTask](grunt.task#grunt.task.renameTask) 方法的别名（alias）。_
 
 ## Loading Externally-Defined Tasks
 
 ### grunt.loadTasks
-_This method is an alias for the [grunt.task.loadTasks](grunt.task#grunt.task.loadTasks) method._
+_此方法是 [grunt.task.loadTasks](grunt.task#grunt.task.loadTasks) 方法的别名（alias）。_
 
 ### grunt.loadNpmTasks
-_This method is an alias for the [grunt.task.loadNpmTasks](grunt.task#grunt.task.loadNpmTasks) method._
+_此方法是 [grunt.task.loadNpmTasks](grunt.task#grunt.task.loadNpmTasks) 方法的别名（alias）。_
 
 
-## Warnings and Fatal Errors
+## 警告和致命错误
 
 ### grunt.warn
-_This method is an alias for the [grunt.fail.warn](grunt.fail#grunt.fail.warn) method._
+_此方法是 [grunt.fail.warn](grunt.fail#grunt.fail.warn) 方法的别名（alias）。_
 
 ### grunt.fatal
-_This method is an alias for the [grunt.fail.fatal](grunt.fail#grunt.fail.fatal) method._
+_此方法是 [grunt.fail.fatal](grunt.fail#grunt.fail.fatal) 方法的别名（alias）。_
 
 
-## Command-line Options
+## 命令行参数
 
 ### grunt.option
-Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, the inverse can be tested, eg. `no-debug`.
+检索命令行参数的值，例如`debug`。注意对于每个命令行参数，都可以做相反的测试，例如`no-debug`。
 
 ```js
 grunt.option(optionName)
 ```
 
-## Miscellaneous
+## 杂项
 
 ### grunt.package
-The current Grunt `package.json` metadata, as an object.
+`package.json` 中存储的元数据，其类型是对象。
 
 ```js
 grunt.package
 ```
 
 ### grunt.version
-The current Grunt version, as a string. This is just a shortcut to the `grunt.package.version` property.
+当前 Grunt 的版本，类型是字符串。它仅仅是`grunt.package.version`属性的缩写。
 
 ```js
 grunt.version
