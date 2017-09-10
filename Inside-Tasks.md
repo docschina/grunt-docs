@@ -1,11 +1,13 @@
-While a task is running, Grunt exposes many task-specific utility properties and methods inside the task function via the `this` object. This same object is also exposed as `grunt.task.current` for use in [templates](grunt.template), eg. the property `this.name` is also available as `grunt.task.current.name`.
+# 深入任务内幕
 
-## Inside All Tasks
+当一个任务执行时，Grunt通过 `this` 对象向此任务函数暴露了很多任务特定的属性和方法。 同样这个对象也将暴露为`grunt.task.current`的形式在 [templates](grunt.template)中使用，例如，`this.name`属性也可以作为`grunt.task.current.name`来使用。
+
+## 所有任务内部都可以使用的方法/属性
 
 ### this.async
-If a task is asynchronous, this method must be invoked to instruct Grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. Either `false` or an `Error` object may be passed to the done function to instruct Grunt that the task has failed.
+如果一个任务是异步的，必须调用此方法以通知Grunt。此方法返回一个 "done" 函数，应当在任务执行完毕后调用。`false` 或 `Error` 对象都可以传递给done函数，以通知Grunt此任务执行失败。
 
-If the `this.async` method isn't invoked, the task will execute synchronously.
+如果 `this.async` 方法没有被调用，此任务将会同步执行。
 
 ```js
 // Tell Grunt this task is asynchronous.
@@ -20,57 +22,58 @@ setTimeout(function() {
 ```
 
 ### this.requires
-If one task depends on the successful completion of another task (or tasks), this method can be used to force Grunt to abort if the other task didn't run, or if the other task failed. The tasks list can be an array of task names or individual task names, as arguments.
+如果一个任务依赖于另外一个(或一些)任务的成功执行，在其依赖的任务没有运行或者运行失败的情况下，这个方法可以被用来强制Grunt退出。作为这个方法的参数，其依赖的任务列表可以是一个包含多个任务名称的数组，也可以是单个的任务名称。
 
-Note that this won't actually run the specified task(s), it will just fail the current task if they haven't already run successfully.
+注意，实际上这个方法并不会运行指定任务列表中的任务，它只是在任务列表中的任务没有成功运行的时候通知系统当前的任务失败了。
 
 ```js
 this.requires(tasksList)
 ```
 
 ### this.requiresConfig
-Fail the current task if one or more required [config](grunt.config) properties is missing. One or more string or array config properties may be specified.
+这个方法可以指定一个或者多个字符串或者数组的配置属性为必需的。如果一个或多个必需的[配置](grunt.config)属性缺失，就通知系统当前任务失败。
 
 ```js
 this.requiresConfig(prop [, prop [, ...]])
 ```
 
-See the [grunt.config documentation](grunt.config) for more information about config properties.
+查看[grunt.config文档](grunt.config)了解更多关于配置属性相关的信息。
 
-_This method is an alias for the [grunt.config.requires](grunt.config#grunt.config.requires) method._
+_这个方式是[grunt.config.requires](grunt.config#grunt.config.requires)方法的一个别名。_
 
 ### this.name
-The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 
-_Note that if a task has been renamed with [grunt.task.renameTask](grunt.task#grunt.task.renameTask) this property will reflect the new name._
+当前任务的名称，和定义在`grunt.registerTask`中的任务名一致。例如，如果以`grunt sample`或者`grunt sample:foo`的方式运行一个名为"sample"的任务，那么在这个任务函数内部，`this.name`的值就是`"sample"`。
+
+_注意，如果通过[grunt.task.renameTask](grunt.task#grunt.task.renameTask) 重命名了一个task，此属性也会跟着变为新名字。_
 
 
 ### this.nameArgs
-The name of the task, including any colon-separated arguments or flags specified on the command-line. For example, if a "sample" task was run as `grunt sample:foo`, inside the task function, `this.nameArgs` would be `"sample:foo"`.
+当前任务的名称，包括在命令行中指定的任意使用逗号分割的参数或者标记。例如，如果以`grunt sample:foo`的方式运行一个名为"sample"的任务，那么在这个任务函数内部，`this.nameArgs`的值就是`"sample:foo"`。
 
-_Note that if a task has been renamed with [grunt.task.renameTask](grunt.task#grunt.task.renameTask) this property will reflect the new name._
+_注意，如果一个任务使用[grunt.task.renameTask](grunt.task#grunt.task.renametask)方法重命名过，那么这个属性也会指向对应的新名称。_
 
 ### this.args
-An array of arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.args` would be `["foo", "bar"]`.
+传递给当前任务的参数数组。例如，以`grunt sample:foo:bar`的方式运行一个名为"sample"的任务，那么在这个任务函数内部，`this.args`的值就是`["foo", "bar"]`。
 
-_Note that in multi tasks, the current target is omitted from the `this.args` array._
+_注意，在多任务形式中，当前目标(名)会从`this.args`数组中省略。_
 
 ### this.flags
-An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`.
+根据传递给当前任务的参数生成的一个对象。例如，以`grunt sample:foo:bar`的形式运行一个名为"sample"的任务，那么在这个任务函数内部，`this.flags`的值是`{foo: true, bar: true}`。
 
-_Note that inside multi tasks, the target name is **not** set as a flag._
+_注意，在多任务形式中，任务目标名不会被设置为一个标记。_
 
 ### this.errorCount
-The number of [grunt.log.error](grunt.log#grunt.log.error) calls that occurred during this task. This can be used to fail a task if errors were logged during the task.
+当前任务执行期间[grunt.log.error](grunt.log#grunt.log.error)方法被调用的次数。如果在任务运行期间有错误信息输出，它可以用来让任务执行失败。
 
 ### this.options
-Returns an options object. Properties of the optional `defaultsObj` argument will be overridden by any task-level `options` object properties, which will be further overridden in multi tasks by any target-level `options` object properties.
+返回一个options对象。`defaultsObj`是一个可选参数，它的属性会被任意的任务级`options`对象的属性覆盖；在多任务形式中，它的属性会进一步被目标级的`options`对象的属性覆盖。
 
 ```js
 this.options([defaultsObj])
 ```
 
-This example shows how a task might use the `this.options` method:
+下面给出了一个例子，展示了在任务中可以如何使用`this.options`方法：
 
 ```js
 var options = this.options({
@@ -80,23 +83,23 @@ var options = this.options({
 doSomething(options.enabled);
 ```
 
-The [Configuring tasks](configuring-tasks#options) guide shows an example of how options may be specified, from the task user's point of view.
+在[配置任务](configuring-tasks#options)指南中，有一个例子展示了如何从用户任务的角度来指定options。
 
-## Inside Multi Tasks
+## 多任务形式内部可用的方法/属性
 
 ### this.target
-In a multi task, this property contains the name of the target currently being iterated over. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.target` would be `"foo"`.
+在一个多任务形式中，这个属性包含了当前正被遍历的目标的名称。例如，如果一个名为"sample"的多任务带有`{sample: {foo: "bar"}}`这样的配置数据，当以`grunt sample:foo`的形式运行这个任务时，那么在这个任务函数内部，`this.target`属性的值就为`"foo"`。
 
 ### this.files
-In a multi task, all files specified using any Grunt-supported [file formats and options](configuring-tasks#files), [globbing patterns](configuring-tasks#globbing-patterns) or [dynamic mappings](configuring-tasks#building-the-files-object-dynamically) will automatically be normalized into a single format: the [Files Array file format](configuring-tasks#files-array-format).
+在一个多任务形式中，使用Grunt支持的[文件格式和选项](configuring-tasks#files)，[通配符模式](configuring-tasks#globbing-patterns)或者[动态映射](configuring-tasks#building-the-files-object-dynamically)方式指定的文件，都会被自动标准化为一个唯一的格式：即[文件数组格式](configuring-tasks#files-array-format)。
 
-What this means is that tasks don't need to contain a ton of boilerplate for explicitly handling custom file formats, globbing patterns, mapping source files to destination files or filtering out files or directories. _A task user can just specify files per the [Configuring tasks](configuring-tasks#files) guide, and **Grunt will handle all the details.**_
+这意味着，任务不需要为了明确的处理自定义文件格式，通配符格式，源文件到目标文件映射或者过滤输出文件或者目录而包含大量模板。_任务只需要根据[配置任务](configuring-tasks#files)指南中的说明指定文件，**Grunt会自动处理所有任务细节。**_
 
-Your task should iterate over the `this.files` array, utilizing the `src` and `dest` properties of each object in that array. The `this.files` property will always be an array. The `src` property will also always be an array, in case your task cares about multiple source files per destination file.
+this.files`属性永远都是一个数组。你的任务应该利用数组中每个对象的`src`和`dest`属性遍历`this.files`数组。在你的任务关注每个目标文件的多个源文件的情况下，`src`属性也永远是一个数组。
 
-_Note that it's possible that nonexistent files might be included in `src` values, so you may want to explicitly test that source files exist before using them._
+_注意，有可能不存在的文件也被包含在 `src` 的值当中，因此，你应该在使用前检查源文件是否存在。_
 
-This example shows how a simple "concat" task might use the `this.files` property:
+下面的例子展示了一个简单的"concat"任务是怎样使用`this.files`属性的：
 
 ```js
 this.files.forEach(function(file) {
@@ -119,12 +122,12 @@ this.files.forEach(function(file) {
 });
 ```
 
-_If you need the original file object properties, they are available on each individual file object under the `orig` property, but there is no known use-case for accessing the original properties._
+_如果你还需要使用原始文件对象的属性，可以通过每个单独的文件对象的`orig`属性来获取并使用，但是目前都没发现有访问原始属性的用例。_
 
 ### this.filesSrc
-In a multi task, all `src` files specified via any [file format](configuring-tasks#files) are reduced to a single array. If your task is "read only" and doesn't care about destination filepaths, use this array instead of `this.files`.
+在多任务形式中，在`src`中通过任意的[文件格式](configuring-tasks#files)指定的文件都会被归并到一个数组。如果你的任务是"只读"的并且无需关心目标文件路径，可以使用这个数组来替代`this.files`。
 
-This example shows how a simple "lint" task might use the `this.filesSrc` property:
+下面这个例子展示了一个简单的"lint"的任务是怎样使用`this.filesSrc`属性的：
 
 ```js
 // Lint specified files.
@@ -144,7 +147,6 @@ grunt.log.ok('Files lint free: ' + files.length);
 ```
 
 ### this.data
-In a multi task, this is the actual data stored in the Grunt config object for the given target.
-For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
+在多任务形式中，这是存储在给定目标的Grunt配置对象中的实际数据。例如，如果一个名为"sample"的多任务带有`{sample: {foo: "bar"}}`这样的配置数据，当以`grunt sample:foo`的形式运行这个任务时，那么在这个任务函数内部，`this.data`的值就为`"bar"`。
 
-_It is recommended that `this.options` `this.files` and `this.filesSrc` are used instead of `this.data`, as their values are normalized._
+_推荐使用`this.options`，`this.files`和`this.filesSrc`来替代`this.data`, 因为它们的值都是经过标准化的。_

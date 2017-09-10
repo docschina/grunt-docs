@@ -1,27 +1,29 @@
-1. Install [grunt-init](https://github.com/gruntjs/grunt-init) with `npm install -g grunt-init`
-2. Install the gruntplugin template with `git clone git://github.com/gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin` (`%USERPROFILE%\.grunt-init\gruntplugin` on Windows).
-3. Run `grunt-init gruntplugin` in an empty directory.
-4. Run `npm install` to prepare the development environment.
-5. Author your plugin.
-6. Run `npm publish` to publish the Grunt plugin to npm!
+# 创建插件
 
-## Notes
+1. 通过 `npm install -g grunt-init` 命令安装 [grunt-init](https://github.com/gruntjs/grunt-init) 。
+2. 通过 `git clone git://github.com/gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin` 命令安装grunt插件模版。
+3. 在一个空的目录中执行 `grunt-init gruntplugin` 。
+4. 执行 `npm install` 命令以准备开发环境。
+5. 为你的插件书写代码。
+6. 执行 `npm publish` 命令将你创建的 Grunt 插件提发布npm！
 
-### Naming your task
+## 注意
 
-The "grunt-contrib" namespace is reserved for tasks maintained by the Grunt team, please name your task something appropriate that avoids that naming scheme.
+### 命名你的task
 
-### Debugging
-Grunt hides error stack traces by default, but they can be enabled for easier task debugging with the `--stack` option. If you want Grunt to always log stack traces on errors, create an alias in your shell. Eg, in bash, you could do `alias grunt='grunt --stack'`.
+"grunt-contrib" 命名空间保留给 Grunt 团队维护的task使用，请给你自己的task起一个合适名字，并且避免使用被保留的命名空间。
 
-### Storing task files
+### 调试
+Grunt默认隐藏了error stack traces，但是可以通过 `--stack` 参数启用，方便你调试自己的task。如果你希望 Grunt 在出现错误时总是能记录下stack trace，可以在你的shell中创建一个命令别名（alias）。例如，在bash中，可以通过 `alias grunt='grunt --stack'` 命令创建一个别名。
 
-Only store data files in a .grunt/[npm-module-name]/ directory at the project's root and clean up after yourself when appropriate. This is not a solution for temporary scratch files, use one of the common npm modules (eg [temporary](https://www.npmjs.org/package/temporary), [tmp](https://www.npmjs.org/package/tmp)) that take advantage of the OS level temporary directories for that case.
+### 存储任务文件
 
-### Avoid Changing the Current Working Directory: `process.cwd()`
-By default, the current working directory is set to be the directory that contains the gruntfile. The user can change it using `grunt.file.setBase()` in their gruntfile, but plugins should take care to not change it.
+只在项目根目录中的 .grunt/[npm-module-name] 目录中存储数据文件，并在适当的时候将其清除。对于临时文件这并不是一个好的解决方案, 建议使用后面列出的几个常用npm模块（例如 [temporary](https://www.npmjs.org/package/temporary)、[tmp](https://www.npmjs.org/package/tmp)）来调用操作系统级别的临时目录功能。
 
-`path.resolve('foo')` can be used to get the absolute path of the filepath 'foo' relative to the `Gruntfile`.
+### 避免改变当前工作目录：`process.cwd()`
+默认情况下，包含gruntfile文件的目录被设置为当前工作目录。用户可以在自己的gruntfile中通过执行`grunt.file.setBase()` 改变改变当前工作目录，但是插件不应该改变它。
+
+`path.resolve('foo')` 可以被用来获取'foo' 相对于 `Gruntfile` 所在目录的绝对路径。
 
 ### Creating your task
 

@@ -1,20 +1,22 @@
-Access project-specific configuration data defined in the `Gruntfile`.
+#grunt.config
 
-Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object, and any method marked with a ☆ (white star) is also available inside tasks on the `this` object. Just so you know.
+从 `Gruntfile` 中获取针对当前项目的配置数据。
 
-## Initializing Config Data
-_Note that the following method is also available on the `grunt` object as `grunt.initConfig`._
+注意，任何标记为 ☃ (unicode snowman) 的方法也是可以直接通过 `grunt` 对象访问的；任何标记为 ☆ (white star) 的方法都可以在task内部通过 `this` 对象访问的。请知晓。
+
+## 初始化配置数据
+_注意，下面列出的方法也可以通过 `grunt` 对象访问，访问形式为 `grunt.initConfig`。_
 
 ### grunt.config.init ☃
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and can be accessed using the `grunt.config` method. Nearly every project's `Gruntfile` will call this method.
+为当前项目初始化一个配置对象。其中传入的 `configObject` 参数可以用在后续的task中，可以通过 `grunt.config` 方法访问。几乎每个项目的 `Gruntfile` 都会调用此方法。
 
 ```js
 grunt.config.init(configObject)
 ```
 
-Note that any specified `<% %>` template strings will be processed when config data is retrieved.
+注意，任何 `<% %>` 模板字符串只会在取到配置数据后才被处理。
 
-This example contains sample config data for the [grunt-contrib-jshint plugin](https://github.com/gruntjs/grunt-contrib-jshint) `jshint` task:
+下面的案例展示了针对 [grunt-contrib-jshint插件](https://github.com/gruntjs/grunt-contrib-jshint) 中的 `jshint` task的配置数据：
 
 ```js
 grunt.config.init({
@@ -24,18 +26,18 @@ grunt.config.init({
 });
 ```
 
-See the [[Getting started]] guide for more configuration examples.
+查看 [Getting started](getting-started) 指南可以获取更多的配置案例。
 
-_This method is also available as `grunt.initConfig`._
+_此方法还可以以  `grunt.initConfig` 的形式访问。_
 
 
-## Accessing Config Data
+## 获取配置数据
 The following methods allow Grunt configuration data to be accessed either via dot-delimited string like `'pkg.author.name'` or via array of property name parts like `['pkg', 'author', 'name']`.
 
 Note that if a specified property name contains a `.` dot, it must be escaped with a literal backslash, eg. `'concat.dist/built\\.js'`. If an array of parts is specified, Grunt will handle the escaping internally with the `grunt.config.escape` method.
 
 ### grunt.config
-Get or set a value from the project's Grunt configuration. This method serves as an alias to other methods; if two arguments are passed, `grunt.config.set` is called, otherwise `grunt.config.get` is called.
+从项目的 Grunt 配置中获取或者设置一个值。这个方法作为其他方法的别名；如果传递两个参数，`grunt.config.set`被调用，另一方面`grunt.config.get`也被调用。Get or set a value from the project's grunt configuration. This method serves as an alias to other methods; if two arguments are passed, `grunt.config.set` is called, otherwise `grunt.config.get` is called.
 
 ```js
 grunt.config([prop [, value]])
@@ -65,16 +67,16 @@ grunt.config.getRaw([prop])
 ```
 
 ### grunt.config.set
-Set a value into the project's Grunt configuration.
+给当前项目的 Grunt 配置中的某个属性设置一个值。
 
 ```js
 grunt.config.set(prop, value)
 ```
 
-Note that any specified `<% %>` template strings will only be processed when config data is retrieved.
+注意，任何 `<% %>` 模板字符串只会在取到配置数据后才被处理。
 
 ### grunt.config.escape
-Escape `.` dots in the given `propString`. This should be used for property names that contain dots.
+忽略给定的`propString`中的`.`点号。这应该用于包含点号的属性名。Escape `.` dots in the given `propString`. This should be used for property names that contain dots.
 
 ```js
 grunt.config.escape(propString)
@@ -129,13 +131,13 @@ jshint: {
 In conclusion, the first value of the `files` array defined in the `config` variable (`hello.js`) overriddes the first value specified in the `initConfig` configuration call (`Gruntfile.js`).
 
 ## Requiring Config Data
-_Note that the method listed below is also available inside tasks on the `this` object as `this.requiresConfig`._
+_注意，下面列出的方法都可以在task内部通过 `this` 对象访问，访问形式为 `this.requiresConfig`。_
 
 ### grunt.config.requires ☆
-Fail the current task if one or more required config properties is missing, `null` or `undefined`. One or more string or array config properties may be specified.
+如果需要的配置属性有一个或多个不存在、值为`null` 或 `undefined`，当前task将失败。此方法可以指定一个或多个字符串、配置属性数组作为参数。
 
 ```js
 grunt.config.requires(prop [, prop [, ...]])
 ```
 
-_This method is also available inside tasks as `this.requiresConfig`._
+_此方法在task内部以 `this.requiresConfig` 形式调用。_

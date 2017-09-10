@@ -1,59 +1,62 @@
-Miscellaneous utilities for your Gruntfile and tasks.
+#grunt.util
+
+各色工具函数/库，包括 Lo-Dash、Async 和 Hooker。
 
 ### grunt.util.kindOf
-Return the "kind" of a value. Like `typeof` but returns the internal `[[Class]]` value. Possible results are `"number"`, `"string"`, `"boolean"`, `"function"`, `"regexp"`, `"array"`, `"date"`, `"error"`, `"null"`, `"undefined"` and the catch-all `"object"`.
+返回给定值的"类型（kind）"。就像`typeof`，但是其返回的是内部的`[Class](class/)`值。可能返回的结果是`"number"`、`"string"`、`"boolean"`、`"function"`、`"regexp"`、`"array"`、`"date"`、`"error"`、`"null"`、`"undefined"` 和可以表示一切类型的 `"object"`。
 
 ```js
 grunt.util.kindOf(value)
 ```
 
 ### grunt.util.error
-Return a new Error instance (that can be thrown) with the appropriate message. If an Error object is specified instead of `message` that object will be returned.
-Also, if an Error object is specified for `origError` and Grunt was run with the `--stack` option, the original Error stack will be dumped.
+返回一个新的Error实例（也可以抛出）与相应的消息。如果指定的是Error对象而不是`message`，则返回对象。
+
+另外，如果为 `origError` 参数指定的是Error对象，并且使用 `--stack` 选项运行Grunt，则输出原始的Error堆栈。
 
 ```js
 grunt.util.error(message [, origError])
 ```
 
 ### grunt.util.linefeed
-The linefeed character, normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
+将换行符转换为当前系统所采用的形式（Window上是`\r\n`，其他系统为`\n`）。
 
 ### grunt.util.normalizelf
-Given a string, return a new string with all the linefeeds normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
+对于一个给定的字符串，将其所有换行符转换为当前系统所采用的形式，然后返回一个新的字符串。（Window上是`\r\n`，其他系统为`\n`）
 
 ```js
 grunt.util.normalizelf(string)
 ```
 
 ### grunt.util.recurse
-Recurse through nested objects and arrays, executing `callbackFunction` for each non-object value. If `continueFunction` returns `false`, a given object or value will be skipped.
+递归嵌套的对象和数组，为每个非对象值执行`callbackFunction`。如果`continueFunction`返回`false`, 给定的对象或值将会被跳过。
 
 ```js
 grunt.util.recurse(object, callbackFunction, continueFunction)
 ```
 
 ### grunt.util.repeat
-Return string `str` repeated `n` times.
+返回被重复`n`次的字符串`str`。
 
 ```js
 grunt.util.repeat(n, str)
 ```
 
 ### grunt.util.pluralize
-Given `str` of `"a/b"`, If `n` is `1`, return `"a"` otherwise `"b"`. You can specify a custom separator if '/' doesn't work for you.
+给定一个`"a/b"`形式的`str`，如果`n`为`1`，返回`"a"`，否则返回`"b"`。如果不能使用'/'，也可以指定一个自定义的分隔符。
 
 ```js
 grunt.util.pluralize(n, str, separator)
 ```
 
 ### grunt.util.spawn
-Spawn a child process, keeping track of its stdout, stderr and exit code. The method returns a reference to the spawned child. When the child exits, the `doneFunction` is called.
+生成一个子进程，并跟踪其stdout、stderr和退出码。此方法返回子进程的引用。当子进程退出时，`doneFunction` 函数被调用。
 
 ```js
 grunt.util.spawn(options, doneFunction)
 ```
 
-The `options` object has these possible properties:
+`options` 对象可以指定以下属性：
 
 ```js
 var options = {
@@ -73,7 +76,7 @@ var options = {
 };
 ```
 
-The `doneFunction` accepts these arguments:
+`doneFunction` 函数可以接收以下参数：
 
 ```js
 function doneFunction(error, result, code) {
@@ -94,20 +97,20 @@ function doneFunction(error, result, code) {
 ```
 
 ### grunt.util.toArray
-Given an array or array-like object, return an array. Great for converting `arguments` objects into arrays.
+对于传入的数组或类数组对象，返回一个数组。对于将`arguments`对象转换为数组是非常有用的。
 
 ```js
 grunt.util.toArray(arrayLikeObject)
 ```
 
 ### grunt.util.callbackify
-Normalizes both "returns a value" and "passes result to a callback" functions to always pass a result to the specified callback. If the original function returns a value, that value will now be passed to the callback, which is specified as the last argument, after all other predefined arguments. If the original function passed a value to a callback, it will continue to do so.
+标准化"返回值"和"传递结果给回调"的函数，总是传递一个结果给指定的回调函数。如果原始函数返回一个值，该值将即刻传递给回调函数,，并指定为最后一个参数，在所有的预定义参数之后。如果原始函数传递一个值给回调函数,，它也会继续照样如此。
 
 ```js
 grunt.util.callbackify(syncOrAsyncFunction)
 ```
 
-This example might better illustrate:
+下面这个例子也许能够更好的说明：
 
 ```js
 function add1(a, b) {
@@ -128,37 +131,37 @@ fn2(1, 2, function(result) {
 });
 ```
 
-## Internal libraries
+## 内部工具库
 
 ### grunt.util.namespace
-An internal library for resolving deeply-nested properties in objects.
+此内部工具库用于解析对象中深度嵌套的属性。
 
 ### grunt.util.task
-An internal library for task running.
+用于task执行的内部工具库。
 
-## External libraries
-*Deprecated*
+## 外部工具库
+*不建议使用*
 
-__All external libraries that are listed below are now deprecated.__
+__下面列出的所有外部工具库已经不再建议使用了。__
 
-Please use __npm__ to manage these external libraries in your project's dependencies.
+请使用 __npm__ 管理项目中对第三方工具库的依赖。
 
-For example if you want to use [Lo-Dash](https://www.npmjs.org/package/lodash), install it first: `npm install lodash`, then
-use it in your `Gruntfile`: `var _ = require('lodash');`.
+例如，如果你需要使用 [Lo-Dash](https://www.npmjs.org/package/lodash)，首先通过 `npm install lodash` 安装，然后在 `Gruntfile` 文件中使用即可： `var _ = require('lodash');`
 
-#### grunt.util._
-*Deprecated*
+### grunt.util._
+*不建议使用*
 
-[Lo-Dash](http://lodash.com/) and [Underscore.string](https://github.com/epeli/underscore.string)
+[Lo-Dash](http://lodash.com/) - 很多有用的数组、函数和对象工具方法。
+[Underscore.string](https://github.com/epeli/underscore.string) - 很多实用的字符串工具函数。
 
 `grunt.util._.str` is available for methods that conflict with existing Lo-Dash methods.
 
-#### grunt.util.async
-*Deprecated*
+### grunt.util.async
+*不建议使用*
 
-[Async](https://github.com/caolan/async) - Async utilities for node and the browser.
+[Async](https://github.com/caolan/async) - 对node和浏览器都适用的异步工具。
 
 #### grunt.util.hooker
-*Deprecated*
+*不建议使用*
 
-[JavaScript Hooker](https://github.com/cowboy/javascript-hooker) - Monkey-patch (hook) functions for debugging and stuff.
+[JavaScript Hooker](https://github.com/cowboy/javascript-hooker) - 用于调试和做些其他事情的钩子（hook）函数。

@@ -1,33 +1,35 @@
-For when something goes horribly wrong.
+# grunt.fail
 
-See the [fail lib source](https://github.com/gruntjs/grunt/blob/master/lib/grunt/fail.js) for more information.
+用于发生致命的错误时。
+
+参见 [fail lib source](https://github.com/gruntjs/grunt/blob/master/lib/grunt/fail.js) 以获取更多信息。
 
 ## The fail API
 
-If something explodes (or is about to explode) inside a task, it can force Grunt to abort. See the [exit codes documentation](Exit-Codes) for a list of all built-in Grunt exit codes.
+如果任务内部某些代码已经（或即将）崩溃，可能导致Grunt强行中止。参见 [退出码文档](Exit-Codes) 以获取完整的退出码（exit code）列表。
 
-Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object. Just so you know. See the [API main page](grunt) for more usage information.
+注意，任何带有 ☃ (unicode snowman) 标记的方法都可以直接通过 `grunt` 对象访问。参见 [API首页](grunt) 以获取更多信息。
 
 ### grunt.fail.warn ☃
-Display a warning and abort Grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.
+显示一条警告信息然后立即退出Grunt。如果在命令行中指定了`--force` 选项，Grunt将继续执行后续任务。`error` 参数可以是字符串信息或error对象。
 
 ```js
 grunt.fail.warn(error [, errorcode])
 ```
 
-If `--stack` is specified on the command-line and an error object was specified, a stack trace will be logged.
+如果在命令行中指定 `--stack` 参数，并且给定error对象，stack trace 将会被记入日志。
 
-_This method is also available as `grunt.warn`._
+_此方法还可以通过 `grunt.warn` 访问。_
 
 ### grunt.fail.fatal ☃
-Display a warning and abort Grunt immediately. The `error` argument can be a string message or an error object.
+显示一条警告信息然后立即退出Grunt。`error` 参数可以是字符串信息或error对象。
 
 ```js
 grunt.fail.fatal(error [, errorcode])
 ```
 
-If `--stack` is specified on the command-line and an error object was specified, a stack trace will be logged.
+如果在命令行中指定 `--stack` 参数，并且给定error对象，stack trace 将会被记入日志。
 
-A beep is emitted on fatal unless the `--no-color` option is specified.
+出现致命（fatal）错误时会发出一声蜂鸣声，除非指定了 `--no-color` 参数。
 
-_This method is also available as `grunt.fatal`._
+_此方法还可以通过 `grunt.fatal` 访问。_
