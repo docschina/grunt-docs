@@ -1,5 +1,3 @@
-# 配置任务
-
 这个指南解释了如何使用 `Gruntfile` 来为你的项目配置task。如果你还不知道 `Gruntfile` 是什么，请先阅读 [[Getting Started{{快速入门}}]] 指南并看看这个[[Sample Gruntfile{{ Gruntfile 实例}}]]。
 
 ## Grunt配置
