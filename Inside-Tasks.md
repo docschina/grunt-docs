@@ -1,4 +1,3 @@
-# 深入任务内幕
 
 当一个任务执行时，Grunt通过 `this` 对象向此任务函数暴露了很多任务特定的属性和方法。 同样这个对象也将暴露为`grunt.task.current`的形式在 [templates](grunt.template)中使用，例如，`this.name`属性也可以作为`grunt.task.current.name`来使用。
 
