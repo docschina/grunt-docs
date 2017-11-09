@@ -1,4 +1,3 @@
-#grunt.config
 
 从 `Gruntfile` 中获取针对当前项目的配置数据。
 
