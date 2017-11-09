@@ -1,4 +1,3 @@
-# 创建插件
 
 1. 通过 `npm install -g grunt-init` 命令安装 [grunt-init](https://github.com/gruntjs/grunt-init) 。
 2. 通过 `git clone git://github.com/gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin` 命令安装grunt插件模版。
