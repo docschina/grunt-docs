@@ -4,7 +4,7 @@ Stable Version: **0.4.5**
 
 Development Version: **master**
 
-## 文档
+## Documentation
 * [[Getting Started]]
 * [[Configuring Tasks]]
 * [[Sample Gruntfile]]
@@ -12,20 +12,20 @@ Development Version: **master**
 * [[Creating Plugins]]
 * [[Using the CLI]]
 
-### 进阶知识
+### Advanced
 * [[API]]
 * [[Installing Grunt]]
 * [[Frequently Asked Questions]]
 * [[Project Scaffolding]]
 
-### 社区
+### Community
 * [[Help Resources]]
 * [[Who uses Grunt]]
 * [[Built with Grunt Badge]]
 * [[Contributing]]
 * [[Development Team]]
 
-### 升级指南
+### Migration guides
 * [[Upgrading from 0.3 to 0.4]]
 * [[Upgrading from 0.4 to 1.0]]
 
