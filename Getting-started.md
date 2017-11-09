@@ -1,5 +1,3 @@
-# 快速入门
-
 Grunt和 Grunt 插件是通过 [npm](https://www.npmjs.org/) 安装并管理的，npm是 [Node.js](https://nodejs.org/) 的包管理器。
 
 Grunt 0.4.x 必须配合 Node.js `>= 0.8.0` 版本使用。
