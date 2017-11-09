@@ -1,4 +1,3 @@
-#grunt.option
 
 Grunt的option API被用来在多个任务之间共享参数、访问命令行中设置的参数。
 
