@@ -1,4 +1,3 @@
-#grunt
 
 Grunt通过`grunt`对象暴露所有方法和属性，并将此对象赋予`module.exports`函数，这些方法和属性都将传递到你的[Gruntfile](getting-started)、Grunt插件或者[task文件](creating-tasks)中。
 
