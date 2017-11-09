@@ -1,3 +1,5 @@
+# Gruntfile 实例
+
 In this page we walk you through the creation of a `Gruntfile` that covers the usual needs of a simple project. If you already know how to set up a `Gruntfile` and you're looking for a quick example, here's one:
 
 ```js
@@ -158,86 +160,4 @@ watch: {
 }
 ```
 
-With this snippet, we've set up the configuration for all the plugins mentioned in the introduction. The last step to perform is to load in the Grunt plugins we need. All of these should have been previously installed through npm.
-
-```js
-grunt.loadNpmTasks('grunt-contrib-uglify');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-qunit');
-grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-contrib-concat');
-```
-
-And finally set up some tasks. The most important of these tasks is the default task:
-
-```js
-// this would be run by typing "grunt test" on the command line
-grunt.registerTask('test', ['jshint', 'qunit']);
-
-// the default task can be run just by typing "grunt" on the command line
-grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-```
-
-The default task is executed when you invoke `Grunt` without specifying a task to execute (`grunt`).
-
-## The resulting `Gruntfile`
-
-If you've followed this guide correctly you should have the following `Gruntfile`:
-
-```js
-module.exports = function(grunt) {
-
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['src/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
-      }
-    },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
-      dist: {
-        files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
-        }
-      }
-    },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    jshint: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-      options: {
-        // options here to override JSHint defaults
-        globals: {
-          jQuery: true,
-          console: true,
-          module: true,
-          document: true
-        }
-      }
-    },
-    watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
-    }
-  });
-
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-
-  grunt.registerTask('test', ['jshint', 'qunit']);
-
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-
-};
-```
+With
