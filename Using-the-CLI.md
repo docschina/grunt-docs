@@ -1,5 +1,3 @@
-# 使用命令行工具
-
 ## 安装命令行工具
 
 执行 `sudo npm install -g grunt-cli` (Windows users should omit "sudo ", and may need to run the command-line with elevated privileges)。
