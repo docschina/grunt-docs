@@ -1,4 +1,3 @@
-#grunt.util
 
 各色工具函数/库，包括 Lo-Dash、Async 和 Hooker。
 
