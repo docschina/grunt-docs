@@ -1,4 +1,3 @@
-# Gruntfile 实例
 
 In this page we walk you through the creation of a `Gruntfile` that covers the usual needs of a simple project. If you already know how to set up a `Gruntfile` and you're looking for a quick example, here's one:
 
